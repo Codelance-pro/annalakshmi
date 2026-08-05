@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, MessageCircle, Tag, Sparkles, Heart, Palette } from 'lucide-react'
-import { productAPI, API_BASE } from '../services/api'
+import { productAPI } from '../services/api'
+import { getImageUrl } from '../utils/imageUrl'
 import OtpModal from '../components/OtpModal'
 import { useOtpAuth } from '../context/OtpAuthContext'
 const CATEGORY_LABEL = { jute: 'Jute Bag', tote: 'Tote Bag', wedding: 'Wedding Bag' }
@@ -64,7 +65,7 @@ export default function ProductDetail() {
   )
 
   const images = product.images?.length
-    ? product.images.map(i => `${API_BASE}${i}`)
+    ? product.images.map(i => getImageUrl(i))
     : ['https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80']
 
   return (
@@ -83,7 +84,7 @@ export default function ProductDetail() {
           {/* Images */}
           <div className="flex flex-col gap-4">
             <div className="relative aspect-square bg-white rounded-2xl overflow-hidden border border-border group shadow-sm">
-              <img src={images[activeImg]} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <img src={images[activeImg]} alt={product.name} className="w-full h-full object-cover  transition-transform duration-500 group-hover:scale-105" />
               {product.isNew && <div className="absolute top-5 left-0 z-10 bg-gradient-to-r from-gold to-gold-dark text-white text-[0.7rem] font-bold uppercase tracking-[1.5px] py-1.5 px-4 rounded-r-lg shadow-md">New Arrival</div>}
               {images.length > 1 && (
                 <>

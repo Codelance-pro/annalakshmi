@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom'
 import { Eye, MessageCircle } from 'lucide-react'
-import { API_BASE } from '../services/api'
+import { getImageUrl } from '../utils/imageUrl'
 
 const CATEGORY_LABEL = { jute: 'Jute Bag', tote: 'Tote Bag', wedding: 'Wedding Bag' }
 
 export default function ProductCard({ product, style }) {
-  const img = product.images?.[0]
-    ? `${API_BASE}${product.images[0]}`
-    : `https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80`
+  const img = getImageUrl(product.images?.[0])
 
   return (
     <div className="bg-white rounded-2xl border border-black/5 overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(107,68,35,0.08)] opacity-0 animate-fade-up relative" style={style}>

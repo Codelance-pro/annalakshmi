@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useOtpAuth } from '../context/OtpAuthContext'
 import { designAPI, productAPI, API_BASE } from '../services/api'
+import { getImageUrl } from '../utils/imageUrl'
 import toast from 'react-hot-toast'
 
 // ─── Preset Google Fonts to load ──────────────────────────────────────────────
@@ -308,9 +309,7 @@ export default function ToteBagDesigner() {
 
   // Compute active bag image path dynamically (support both absolute frontend assets and uploads)
   const bagImageUrl = product?.images?.length
-    ? product.images[0].startsWith('http') || (product.images[0].startsWith('/') && !product.images[0].startsWith('/uploads'))
-      ? product.images[0]
-      : `${API_BASE}${product.images[0]}`
+    ? getImageUrl(product.images[0])
     : '/tote-bag.png'
   const [bagImage] = useImage(bagImageUrl, 'anonymous')
 
@@ -456,7 +455,7 @@ export default function ToteBagDesigner() {
       const formData = new FormData()
       formData.append('artwork', file)
       const res = await designAPI.upload(formData, token)
-      const url = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${res.data.url}`
+      const url = getImageUrl(res.data.url)
       
       // Save upload to gallery
       setGallery(prev => [url, ...prev])

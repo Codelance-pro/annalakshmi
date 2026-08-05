@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Plus, Pencil, Trash2, X, Upload, Image as ImageIcon, Search, Check } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { productAPI, API_BASE } from '../../services/api'
+import { productAPI } from '../../services/api'
+import { getImageUrl } from '../../utils/imageUrl'
 
 const CATEGORIES = ['jute', 'tote', 'wedding']
 
@@ -130,7 +131,7 @@ function ProductModal({ product, onClose, onSaved }) {
                     onClick={() => toggleRemoveExisting(img)}
                     title={removeImages.includes(img) ? 'Click to keep' : 'Click to remove'}
                   >
-                    <img src={`${API_BASE}${img}`} alt="" className={`w-full h-full object-cover transition-opacity ${removeImages.includes(img) ? 'opacity-40 grayscale' : ''}`} />
+                    <img src={getImageUrl(img)} alt="" className={`w-full h-full object-cover transition-opacity ${removeImages.includes(img) ? 'opacity-40 grayscale' : ''}`} />
                     {removeImages.includes(img) && <div className="absolute inset-0 bg-[#e74c3c]/10 flex items-center justify-center text-[#e74c3c]"><X size={20} /></div>}
                   </div>
                 ))}
@@ -265,7 +266,7 @@ export default function AdminProducts() {
               </thead>
               <tbody>
                 {filtered.map(p => {
-                  const img = p.images?.[0] ? `${API_BASE}${p.images[0]}` : null
+                  const img = p.images?.[0] ? getImageUrl(p.images[0]) : null
                   return (
                     <tr key={p.id} className="border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
                       <td className="px-6 py-4">

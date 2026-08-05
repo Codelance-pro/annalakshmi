@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Package, ShoppingBag, Heart, Star, Sparkles, MessageSquare, TrendingUp } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { statsAPI, productAPI, API_BASE } from '../../services/api'
+import { statsAPI, productAPI } from '../../services/api'
+import { getImageUrl } from '../../utils/imageUrl'
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null)
@@ -95,7 +96,7 @@ export default function AdminDashboard() {
             </div>
           ) : (
             recentProducts.map(p => {
-              const img = p.images?.[0] ? `${API_BASE}${p.images[0]}` : null
+              const img = p.images?.[0] ? getImageUrl(p.images[0]) : null
               return (
                 <div key={p.id} className="flex items-center gap-4 px-6 py-4 border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
                   <div className="w-12 h-12 rounded-lg bg-[#f8f9fa] border border-[#e1e8ed] overflow-hidden shrink-0 flex items-center justify-center text-[1.2rem]">
