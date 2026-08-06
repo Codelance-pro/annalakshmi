@@ -154,7 +154,7 @@ export default function Contact() {
                     className="form-control"
                     placeholder="Tell us what you're looking for — product interest, quantity, customisation needs..."
                     value={form.message}
-                    onChange={handle}
+                    onChange={handle} // surya
                     required
                     rows={6}
                   />
