@@ -66,8 +66,10 @@ export default function Home() {
           productAPI.getAll({ latest: true }),
           productAPI.getAll({ featured: true }),
         ])
-        setNewProducts(newRes.data.slice(0, 4))
-        setFeaturedProducts(featuredRes.data.slice(0, 6))
+        console.log("newRes", newRes.data)
+        console.log("featuredRes", featuredRes.data)
+        setNewProducts(newRes.data.products.slice(0, 4))
+        setFeaturedProducts(featuredRes.data.products.slice(0, 6))
       } catch (e) {
         console.error(e)
       } finally {
