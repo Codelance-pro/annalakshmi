@@ -54,7 +54,7 @@ function ProductModal({ product, onClose, onSaved }) {
       newImages.forEach(img => fd.append('images', img))
 
       if (product) {
-        await productAPI.update(product.id, fd)
+        await productAPI.update(product.id || product._id, fd)
         toast.success('Product updated!')
       } else {
         await productAPI.create(fd)
@@ -266,9 +266,10 @@ export default function AdminProducts() {
               </thead>
               <tbody>
                 {filtered.map(p => {
+                  const pid = p.id || p._id
                   const img = p.images?.[0] ? getImageUrl(p.images[0]) : null
                   return (
-                    <tr key={p.id} className="border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
+                    <tr key={pid} className="border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 rounded-lg bg-[#f8f9fa] border border-[#e1e8ed] overflow-hidden shrink-0 flex items-center justify-center text-[1.2rem]">
@@ -304,7 +305,7 @@ export default function AdminProducts() {
                           ><Pencil size={15} /></button>
                           <button
                             className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors text-text-secondary hover:bg-[#e74c3c]/10 hover:text-[#e74c3c]"
-                            onClick={() => handleDelete(p.id)}
+                            onClick={() => handleDelete(pid)}
                             title="Delete"
                           ><Trash2 size={15} /></button>
                         </div>

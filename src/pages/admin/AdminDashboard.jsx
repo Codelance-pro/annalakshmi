@@ -13,7 +13,8 @@ export default function AdminDashboard() {
     Promise.all([statsAPI.get(), productAPI.getAll({ includeCustomizable: true })])
       .then(([sRes, pRes]) => {
         setStats(sRes.data)
-        setRecentProducts(pRes.data.slice(0, 5))
+        const pList = Array.isArray(pRes.data) ? pRes.data : pRes.data?.products || []
+        setRecentProducts(pList.slice(0, 5))
       })
       .catch(console.error)
       .finally(() => setLoading(false))
@@ -96,9 +97,10 @@ export default function AdminDashboard() {
             </div>
           ) : (
             recentProducts.map(p => {
+              const pid = p.id || p._id
               const img = p.images?.[0] ? getImageUrl(p.images[0]) : null
               return (
-                <div key={p.id} className="flex items-center gap-4 px-6 py-4 border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
+                <div key={pid} className="flex items-center gap-4 px-6 py-4 border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
                   <div className="w-12 h-12 rounded-lg bg-[#f8f9fa] border border-[#e1e8ed] overflow-hidden shrink-0 flex items-center justify-center text-[1.2rem]">
                     {img
                       ? <img src={img} alt={p.name} className="w-full h-full object-cover" />

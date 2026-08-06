@@ -6,6 +6,7 @@ const CATEGORY_LABEL = { jute: 'Jute Bag', tote: 'Tote Bag', wedding: 'Wedding B
 
 export default function ProductCard({ product, style }) {
   const img = getImageUrl(product.images?.[0])
+  const productId = product.id || product._id
 
   return (
     <div className="bg-white rounded-2xl border border-black/5 overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(107,68,35,0.08)] opacity-0 animate-fade-up relative" style={style}>
@@ -15,7 +16,7 @@ export default function ProductCard({ product, style }) {
         </div>
       )}
       
-      <Link to={`/product/${product.id}`} className="block">
+      <Link to={`/product/${productId}`} className="block">
         <div className="aspect-[4/3] bg-warm-white relative overflow-hidden group">
           <img src={img} alt={product.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
           
@@ -44,7 +45,7 @@ export default function ProductCard({ product, style }) {
           {CATEGORY_LABEL[product.category] || product.category}
         </div>
         
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${productId}`}>
           <h3 className="font-display text-[1.1rem] font-bold text-text-primary leading-[1.3] mb-2 transition-colors hover:text-gold-dark line-clamp-1">
             {product.name}
           </h3>
@@ -70,10 +71,10 @@ export default function ProductCard({ product, style }) {
       </div>
       
       <div className="flex items-center gap-3 p-4 border-t border-black/5 bg-[#fafafa]">
-        <Link to={`/product/${product.id}`} className="btn btn-ghost flex-1 justify-center text-[0.82rem] py-2 px-3.5">
+        <Link to={`/product/${productId}`} className="btn btn-ghost flex-1 justify-center text-[0.82rem] py-2 px-3.5">
           <Eye size={14} /> Details
         </Link>
-        <Link to={`/contact?product=${product.id}`} className="btn btn-primary flex-1 justify-center text-[0.82rem] py-2 px-3.5">
+        <Link to={`/contact?product=${productId}`} className="btn btn-primary flex-1 justify-center text-[0.82rem] py-2 px-3.5">
           <MessageCircle size={14} /> Enquire
         </Link>
       </div>
