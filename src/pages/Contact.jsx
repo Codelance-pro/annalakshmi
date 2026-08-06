@@ -60,10 +60,10 @@ export default function Contact() {
 
             <div className="flex flex-col gap-5 mb-10">
               {[
-                { icon: Phone, label: 'Phone / WhatsApp', value: '+91 98765 43210' },
-                { icon: Mail, label: 'Email', value: 'hello@annalakshmi.in' },
-                { icon: MapPin, label: 'Location', value: 'Chennai, Tamil Nadu, India' },
-                { icon: Clock, label: 'Working Hours', value: 'Mon–Sat, 9:00 AM – 6:00 PM IST' },
+                { icon: Phone, label: 'Phone / WhatsApp', value: '+91 63742 86960' },
+                { icon: Mail, label: 'Email', value: 'suriyanarayanan1331@gmail.com' },
+                { icon: MapPin, label: 'Location', value: 'Elukadal street, Madurai, Tamil Nadu, India' },
+                { icon: Clock, label: 'Working Hours', value: 'Mon–Sun, 6:00 AM – 11:00 PM IST' },
               ].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="flex items-start gap-5 p-5 bg-white border border-border rounded-xl transition-all duration-300 hover:shadow-warm hover:-translate-y-1">
                   <div className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center text-gold-dark shrink-0">

@@ -69,15 +69,15 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               <li className="flex items-start gap-3 text-[0.9rem] text-[#a89b8d]">
                 <Phone size={16} className="text-gold mt-0.5 shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 63742 86960</span>
               </li>
               <li className="flex items-start gap-3 text-[0.9rem] text-[#a89b8d]">
                 <Mail size={16} className="text-gold mt-0.5 shrink-0" />
-                <span>hello@annalakshmi.in</span>
+                <span>suriyanarayanan1331@gmail.com</span>
               </li>
               <li className="flex items-start gap-3 text-[0.9rem] text-[#a89b8d]">
                 <MapPin size={16} className="text-gold mt-0.5 shrink-0" />
-                <span>Chennai, Tamil Nadu, India</span>
+                <span>Elukadal street, Madurai, Tamil Nadu, India</span>
               </li>
             </ul>
             <Link to="/contact" className="inline-flex items-center gap-2 px-5 py-2.5 mt-2 rounded-md border border-gold/30 text-gold text-[0.85rem] font-medium transition-colors hover:bg-gold hover:text-white w-fit">
@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-white/5 text-[0.82rem] text-[#8c7f70]">
-          <p>© {new Date().getFullYear()} Annalakshmi Jute &amp; Craft. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Annalakshmi bags &amp; Craft. All rights reserved.</p>
           <p className="flex items-center gap-1.5">Made with <Heart size={12} className="text-gold animate-pulse-gold" /> in India</p>
         </div>
       </div>
