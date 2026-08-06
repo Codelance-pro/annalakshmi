@@ -69,7 +69,7 @@ export default function Home() {
         const newArr = Array.isArray(newRes.data) ? newRes.data : newRes.data?.products || []
         const featArr = Array.isArray(featuredRes.data) ? featuredRes.data : featuredRes.data?.products || []
         setNewProducts(newArr.slice(0, 4))
-        setFeaturedProducts(featArr.slice(0, 6))
+        setFeaturedProducts(featArr.slice(0, 6)) //surya
       } catch (e) {
         console.error(e)
       } finally {
