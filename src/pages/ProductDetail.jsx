@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, MessageCircle, Tag, Sparkles, Heart, Palette } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MessageCircle, Tag, Sparkles, Heart, Palette, Phone } from 'lucide-react'
 import { productAPI } from '../services/api'
 import { getImageUrl } from '../utils/imageUrl'
 import OtpModal from '../components/OtpModal'
@@ -171,12 +171,20 @@ export default function ProductDetail() {
                 <h3 className="font-sans text-[1.05rem] font-semibold">Interested in This Product?</h3>
               </div>
               <p className="text-[0.9rem] text-text-secondary leading-[1.6] mb-5">We don't sell online. Reach out to us for pricing, availability, and custom orders.</p>
-              <Link
-                to={`/contact?product=${product.id}&name=${encodeURIComponent(product.name)}`}
-                className="btn btn-primary w-full justify-center text-[0.95rem]"
-              >
-                <MessageCircle size={16} /> Send Enquiry for This Product
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  to={`/contact?product=${product.id}&name=${encodeURIComponent(product.name)}`}
+                  className="btn btn-primary flex-1 justify-center text-[0.95rem]"
+                >
+                  <MessageCircle size={16} /> Send Enquiry for This Product
+                </Link>
+                <a
+                  href="tel:+916374286960"
+                  className="btn flex-1 justify-center text-[0.95rem] bg-[#27ae60] text-white border-[#27ae60] hover:bg-[#219a52] hover:border-[#219a52] hover:-translate-y-0.5 transition-all shadow-sm hover:shadow-md"
+                >
+                  <Phone size={16} /> Call Us
+                </a>
+              </div>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-5 border-t border-border text-[0.85rem] text-text-secondary">
