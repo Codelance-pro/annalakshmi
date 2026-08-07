@@ -11,6 +11,7 @@ import AdminLogin from './pages/admin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminInquiries from './pages/admin/AdminInquiries'
+import AdminDesigns from './pages/admin/AdminDesigns'
 import AdminLayout from './components/admin/AdminLayout'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import { AuthProvider } from './context/AuthContext'
@@ -45,6 +46,7 @@ function App() {
             <Route index element={<AdminDashboard />} />
             <Route path="products" element={<AdminProducts />} />
             <Route path="inquiries" element={<AdminInquiries />} />
+            <Route path="designs" element={<AdminDesigns />} />
           </Route>
 
           {/* Tote Bag Designer (full-screen, no navbar/footer) */}

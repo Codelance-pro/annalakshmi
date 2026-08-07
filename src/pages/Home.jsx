@@ -70,6 +70,7 @@ export default function Home() {
         const featArr = Array.isArray(featuredRes.data) ? featuredRes.data : featuredRes.data?.products || []
         setNewProducts(newArr.slice(0, 4))
         setFeaturedProducts(featArr.slice(0, 6)) //surya
+        console.log(featArr)
       } catch (e) {
         console.error(e)
       } finally {

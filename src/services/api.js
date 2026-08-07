@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_BASE = import.meta.env.VITE_API_URL || 'https://annalakshmi-backend-1.onrender.com'
+export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 
 const API = axios.create({ baseURL: `${API_BASE}/api` })
 
@@ -36,4 +36,7 @@ export const designAPI = {
   saveDesign: (data, token) =>
     API.post('/save-design', data),
   getDesign: (id) => API.get(`/design/${id}`),
+  getAll: () => API.get('/designs'),
+  downloadExcel: () =>
+    API.get('/designs/export', { responseType: 'blob' }),
 }

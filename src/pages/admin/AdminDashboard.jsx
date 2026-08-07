@@ -32,19 +32,19 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="font-display text-[2rem] font-bold text-text-primary mb-1 tracking-tight">Dashboard</h1>
-      <p className="text-[0.95rem] text-text-secondary mb-8">Welcome back! Here's an overview of your store.</p>
+      <h1 className="font-display text-[1.5rem] sm:text-[2rem] font-bold text-text-primary mb-1 tracking-tight">Dashboard</h1>
+      <p className="text-[0.85rem] sm:text-[0.95rem] text-text-secondary mb-6 sm:mb-8">Welcome back! Here's an overview of your store.</p>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-5">
           {[...Array(4)].map((_, i) => <div key={i} className="skeleton h-[100px] rounded-2xl" />)}
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-5">
             {STAT_CARDS.slice(0, 4).map(card => (
-              <div key={card.label} className="bg-white rounded-2xl p-5 border border-[#e1e8ed] shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex items-center gap-4 transition-transform hover:-translate-y-1">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-[1.2rem] shrink-0 ${card.cls}`}>{card.icon}</div>
+              <div key={card.label} className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-[#e1e8ed] shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex items-center gap-3 sm:gap-4 transition-transform hover:-translate-y-1">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-[1rem] sm:text-[1.2rem] shrink-0 ${card.cls}`}>{card.icon}</div>
                 <div>
                   <div className="font-display text-[1.4rem] font-bold text-text-primary leading-[1.1] mb-1">{card.value}</div>
                   <div className="text-[0.75rem] font-semibold uppercase tracking-[0.5px] text-text-muted">{card.label}</div>
@@ -52,10 +52,10 @@ export default function AdminDashboard() {
               </div>
             ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 mb-6 sm:mb-8">
             {STAT_CARDS.slice(4).map(card => (
-              <div key={card.label} className="bg-white rounded-2xl p-5 border border-[#e1e8ed] shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex items-center gap-4 transition-transform hover:-translate-y-1">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-[1.2rem] shrink-0 ${card.cls}`}>{card.icon}</div>
+              <div key={card.label} className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-[#e1e8ed] shadow-[0_4px_12px_rgba(0,0,0,0.02)] flex items-center gap-3 sm:gap-4 transition-transform hover:-translate-y-1">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-[1rem] sm:text-[1.2rem] shrink-0 ${card.cls}`}>{card.icon}</div>
                 <div>
                   <div className="font-display text-[1.4rem] font-bold text-text-primary leading-[1.1] mb-1">{card.value}</div>
                   <div className="text-[0.75rem] font-semibold uppercase tracking-[0.5px] text-text-muted">{card.label}</div>
@@ -67,16 +67,20 @@ export default function AdminDashboard() {
       )}
 
       {/* Quick actions */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        <Link to="/admin/products" className="flex items-center gap-2.5 px-6 py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <Link to="/admin/products" className="flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.82rem] sm:text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
           <Package size={20} className="text-text-muted transition-colors group-hover:text-gold" />
           <span>Manage Products</span>
         </Link>
-        <Link to="/admin/inquiries" className="flex items-center gap-2.5 px-6 py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
+        <Link to="/admin/inquiries" className="flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.82rem] sm:text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
           <MessageSquare size={20} className="text-text-muted transition-colors group-hover:text-gold" />
           <span>View Inquiries</span>
         </Link>
-        <a href="/" target="_blank" className="flex items-center gap-2.5 px-6 py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
+        <Link to="/admin/designs" className="flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.82rem] sm:text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
+          <Sparkles size={20} className="text-text-muted transition-colors group-hover:text-gold" />
+          <span>Saved Designs</span>
+        </Link>
+        <a href="/" target="_blank" className="flex items-center justify-center sm:justify-start gap-2 sm:gap-2.5 px-4 sm:px-6 py-3 sm:py-3.5 bg-white border border-[#e1e8ed] rounded-xl text-[0.82rem] sm:text-[0.95rem] font-semibold text-text-primary transition-all shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md hover:border-gold-light group">
           <TrendingUp size={20} className="text-text-muted transition-colors group-hover:text-gold" />
           <span>View Live Site</span>
         </a>
@@ -100,7 +104,7 @@ export default function AdminDashboard() {
               const pid = p.id || p._id
               const img = p.images?.[0] ? getImageUrl(p.images[0]) : null
               return (
-                <div key={pid} className="flex items-center gap-4 px-6 py-4 border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
+                <div key={pid} className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 border-b border-[#e1e8ed] last:border-b-0 transition-colors hover:bg-[#fafbfc]">
                   <div className="w-12 h-12 rounded-lg bg-[#f8f9fa] border border-[#e1e8ed] overflow-hidden shrink-0 flex items-center justify-center text-[1.2rem]">
                     {img
                       ? <img src={img} alt={p.name} className="w-full h-full object-cover" />
