@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle, Upload, X, Image as ImageIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { inquiryAPI } from '../services/api'
 
@@ -15,23 +15,71 @@ export default function Contact() {
     phone: '',
     message: productName ? `Hi, I'm interested in "${productName}". Please share more details.` : '',
   })
+  const [sampleImage, setSampleImage] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
 
   const handle = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload a valid image file (JPG, PNG, WebP, etc.)')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image size must be less than 5MB')
+      return
+    }
+    setSampleImage(file)
+    setPreviewUrl(URL.createObjectURL(file))
+  }
+
+  const removeImage = () => {
+    setSampleImage(null)
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl)
+      setPreviewUrl('')
+    }
+  }
+
   const submit = async (e) => {
     e.preventDefault()
+    if (!form.name.trim()) {
+      toast.error('Please enter your name')
+      return
+    }
+    if (!form.phone.trim()) {
+      toast.error('Please enter your mobile number')
+      return
+    }
+
     setLoading(true)
     try {
-      await inquiryAPI.submit({ ...form, productId })
+      const formData = new FormData()
+      formData.append('name', form.name)
+      formData.append('phone', form.phone)
+      formData.append('email', form.email)
+      formData.append('message', form.message)
+      if (productId) formData.append('productId', productId)
+      if (sampleImage) formData.append('sampleImage', sampleImage)
+
+      await inquiryAPI.submit(formData)
       setSent(true)
-      toast.success('Your enquiry has been sent! We\'ll get back to you shortly.')
+      toast.success('Your enquiry and sample image have been sent successfully!')
     } catch (err) {
-      toast.error('Something went wrong. Please try again.')
+      toast.error(err.response?.data?.error || 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
+  }
+
+  const resetForm = () => {
+    setSent(false)
+    setForm({ name: '', email: '', phone: '', message: '' })
+    removeImage()
   }
 
   return (
@@ -44,7 +92,7 @@ export default function Contact() {
           <h1 className="font-display text-[clamp(2.2rem,4vw,3.2rem)] font-bold mb-4">
             Get in <span className="bg-gradient-to-r from-gold-light to-gold bg-clip-text text-transparent">Touch</span>
           </h1>
-          <p className="text-[1.05rem] text-white/70 max-w-[600px] mx-auto">We'd love to hear from you — enquire about products, custom orders, or bulk requirements.</p>
+          <p className="text-[1.05rem] text-white/70 max-w-[600px] mx-auto">We'd love to hear from you — share your requirements or upload a sample image for custom bag orders.</p>
         </div>
       </div>
 
@@ -54,8 +102,8 @@ export default function Contact() {
           <div className="flex flex-col animate-fade-up">
             <h2 className="font-display text-[2rem] lg:text-[2.5rem] font-bold text-text-primary mb-6">Let's Create Something Beautiful</h2>
             <p className="text-[1.1rem] text-text-secondary leading-[1.7] mb-10">
-              Whether you're planning a wedding, a corporate event, or simply love beautiful jute bags —
-              we're here to help you find or create the perfect piece.
+              Whether you're planning a wedding, a corporate event, or have a reference image of a bag design you love —
+              share your details & sample image with us to get a custom quote.
             </p>
 
             <div className="flex flex-col gap-5 mb-10">
@@ -91,10 +139,10 @@ export default function Contact() {
                   <CheckCircle size={40} />
                 </div>
                 <h3 className="font-display text-[1.8rem] font-bold text-text-primary mb-4 animate-fade-up" style={{ animationDelay: '0.1s' }}>Enquiry Sent Successfully!</h3>
-                <p className="text-[1.05rem] text-text-secondary leading-[1.6] mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>Thank you for reaching out. We'll contact you within 24 hours with all the details you need.</p>
+                <p className="text-[1.05rem] text-text-secondary leading-[1.6] mb-8 animate-fade-up" style={{ animationDelay: '0.2s' }}>Thank you for reaching out. We've received your inquiry and reference details and will contact you via WhatsApp / Phone shortly.</p>
                 <button
                   className="btn btn-outline animate-fade-up" style={{ animationDelay: '0.3s' }}
-                  onClick={() => { setSent(false); setForm({ name: '', email: '', phone: '', message: '' }) }}
+                  onClick={resetForm}
                 >
                   Send Another Enquiry
                 </button>
@@ -115,20 +163,20 @@ export default function Contact() {
                       type="text"
                       name="name"
                       className="form-control"
-                      placeholder="Your name"
+                      placeholder="Your full name"
                       value={form.name}
                       onChange={handle}
                       required
                     />
                   </div>
                   <div className="form-group">
-                    <label>Email Address *</label>
+                    <label>Mobile / WhatsApp Number *</label>
                     <input
-                      type="email"
-                      name="email"
+                      type="tel"
+                      name="phone"
                       className="form-control"
-                      placeholder="your@email.com"
-                      value={form.email}
+                      placeholder="+91 98765 43210"
+                      value={form.phone}
                       onChange={handle}
                       required
                     />
@@ -136,33 +184,74 @@ export default function Contact() {
                 </div>
 
                 <div className="form-group">
-                  <label>Phone / WhatsApp</label>
+                  <label>Email Address <span className="text-text-muted text-[0.85rem] font-normal">(Optional)</span></label>
                   <input
-                    type="tel"
-                    name="phone"
+                    type="email"
+                    name="email"
                     className="form-control"
-                    placeholder="+91 XXXXX XXXXX"
-                    value={form.phone}
+                    placeholder="your@email.com"
+                    value={form.email}
                     onChange={handle}
                   />
                 </div>
 
+                {/* Sample Image Upload */}
+                <div className="form-group mb-6">
+                  <label className="flex items-center gap-2">
+                    <ImageIcon size={16} className="text-gold-dark" />
+                    <span>Upload Sample / Reference Image</span>
+                    <span className="text-text-muted text-[0.85rem] font-normal">(Optional)</span>
+                  </label>
+
+                  {previewUrl ? (
+                    <div className="relative mt-2 p-3 bg-[#fafafa] border border-border rounded-xl flex items-center gap-4">
+                      <img src={previewUrl} alt="Sample preview" className="w-20 h-20 object-cover rounded-lg border border-border shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[0.9rem] font-semibold text-text-primary truncate">{sampleImage?.name}</p>
+                        <p className="text-[0.78rem] text-text-muted">{(sampleImage?.size / (1024 * 1024)).toFixed(2)} MB</p>
+                        <span className="inline-block mt-1 px-2 py-0.5 bg-[#27ae60]/10 text-[#27ae60] text-[0.72rem] font-bold rounded">Ready to upload</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center hover:bg-red-200 transition-colors shrink-0"
+                        title="Remove image"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="mt-2 flex flex-col items-center justify-center p-6 border-2 border-dashed border-border rounded-xl bg-[#fafafa] hover:bg-[#f4f4f6] hover:border-gold-light transition-all cursor-pointer group">
+                      <div className="w-12 h-12 rounded-full bg-gold/10 text-gold-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <Upload size={22} />
+                      </div>
+                      <span className="text-[0.95rem] font-semibold text-text-primary mb-1">Click to upload reference image</span>
+                      <span className="text-[0.8rem] text-text-muted">Supports JPG, PNG, WEBP (Max 5MB)</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                    </label>
+                  )}
+                </div>
+
                 <div className="form-group">
-                  <label>Your Message *</label>
+                  <label>Your Message / Custom Requirements</label>
                   <textarea
                     name="message"
                     className="form-control"
-                    placeholder="Tell us what you're looking for — product interest, quantity, customisation needs..."
+                    placeholder="Tell us what you're looking for — bag dimensions, print details, quantity, or specific instructions..."
                     value={form.message}
-                    onChange={handle} // surya
-                    required
-                    rows={6}
+                    onChange={handle}
+                    rows={4}
                   />
                 </div>
 
                 <button type="submit" className="btn btn-primary w-full justify-center mt-4 py-3.5 text-[1rem]" disabled={loading}>
                   {loading ? (
-                    <><span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>
+                    <><span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Uploading & Sending...</>
                   ) : (
                     <><Send size={18} /> Send Enquiry</>
                   )}

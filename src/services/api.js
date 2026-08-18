@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const API_BASE = import.meta.env.VITE_API_URL || 'https://annalakshmi-backend-1.onrender.com'
+// export const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const API = axios.create({ baseURL: `${API_BASE}/api` })
 
@@ -13,7 +14,12 @@ export const productAPI = {
 }
 
 export const inquiryAPI = {
-  submit: (data) => API.post('/inquiries', data),
+  submit: (data) => {
+    if (data instanceof FormData) {
+      return API.post('/inquiries', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    }
+    return API.post('/inquiries', data)
+  },
   getAll: () => API.get('/inquiries'),
 }
 

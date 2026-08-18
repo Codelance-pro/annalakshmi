@@ -11,7 +11,7 @@ const NAV_LINKS = [
   ]},
   { label: 'Design Studio', path: '/customize' },
   { label: 'Wedding Bags', path: '/wedding' },
-  { label: 'Contact', path: '/contact' },
+  { label: 'Reference Images', path: '/contact' },
 ]
 
 export default function Navbar() {
